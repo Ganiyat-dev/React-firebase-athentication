@@ -1,7 +1,17 @@
-import React from "react";
+import React, { Component } from "react";
 
-function Register(props) {
-  console.log(props);
-  return <div>Register</div>;
+class Register extends Component {
+  render() {
+    return (
+      <form>
+        <h3>Register</h3>
+
+        <div className="form-group">
+          <label></label>
+        </div>
+      </form>
+    );
+  }
 }
+
 export default Register;

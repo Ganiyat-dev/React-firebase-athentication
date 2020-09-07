@@ -1,28 +1,48 @@
-import React, { Component } from "react";
+import React from "react";
 import Login from "./components/Login";
 import Register from "./components/Register";
-// function App() {
-//   return (
-//     <div className="App">
-//       <Login Name="Ganiyat" />
-//       <Register FirstName="Azeez" />
-//     </div>
-//   );
-// }
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "./index.css";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-class App extends Component {
-  render() {
-    const name = "Larry";
-
-    return (
+function App() {
+  return (
+    <Router>
       <div className="App">
-        <h1> The App Component</h1>
-        <h4>Hello{name}</h4>
-        <h4> 1+1 = {1 + 1} </h4>
-        <Login />
-        <Register />
+        <nav className="navbar navbar-expand-lg navbar-light fixed">
+          <div className="container">
+            <Link className="navbar-brand" to={"/sign-in"}>
+              Vennit
+            </Link>
+            <div className="collapse navebar-collapse id=" navbarTogglerDemo02>
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <Link className="nav-link" to={"/sign-in"}>
+                    Login
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to={"/sign-up"}>
+                    Register
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <div className="auth-wrapper">
+          <div className="auth-inner">
+            <Switch>
+              <Route exact path="/" component={Login} />
+              <Route path="/sign-in" component={Login} />
+              <Route path="/sign-up" component={Register} />
+            </Switch>
+          </div>
+        </div>
       </div>
-    );
-  }
+    </Router>
+  );
 }
+
 export default App;
