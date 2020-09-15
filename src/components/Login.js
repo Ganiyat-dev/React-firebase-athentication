@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import Proptypes from "prop-types";
+import auth from "../Firebase";
 
 class Login extends Component {
   constructor() {
@@ -19,6 +19,17 @@ class Login extends Component {
   handleSubmit(e) {
     e.preventDefault();
     console.log(this.state.Login);
+    const { email, password } = this.state.Login;
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((user) => {
+        console.log(user);
+      })
+      .catch((error) => alert(error.message));
+  }
+
+  componentDidMount() {
+    console.log("cdm");
   }
 
   render() {

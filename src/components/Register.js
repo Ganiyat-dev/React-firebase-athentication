@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import auth from "../Firebase";
 class Register extends Component {
   constructor() {
     super();
@@ -15,9 +15,21 @@ class Register extends Component {
       Register: { ...this.state.Register, [e.target.name]: e.target.value },
     });
   }
+
   handleSubmit(e) {
     e.preventDefault();
     console.log(this.state.Register);
+    const { email, password } = this.state.Register;
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((user) => {
+        console.log(user);
+      })
+      .catch((error) => alert(error.message));
+  }
+
+  componentDidMount() {
+    console.log("cdm");
   }
 
   render() {
