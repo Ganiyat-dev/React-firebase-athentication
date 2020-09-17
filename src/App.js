@@ -11,6 +11,14 @@ function App() {
     auth.SignOut();
     this.props.history.push("/sign-in");
   };
+  // const history = useHistory;
+
+  // const handleSubmit = () => {
+  //   auth.signOut();
+  //   this.props.history.push("/sign-in");
+  //   console.log("Logout");
+  // };
+
   return (
     <Router>
       <div className="App">
