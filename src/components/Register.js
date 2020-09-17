@@ -1,13 +1,39 @@
 import React, { Component } from "react";
+// import { Redirect } from "react-router-dom";
 import auth from "../Firebase";
 class Register extends Component {
   constructor() {
     super();
     this.state = {
-      Register: { FirstName: "", LastName: "", email: "", password: "" },
+      Register: {
+        FirstName: "",
+        LastName: "",
+        email: "",
+        password: "",
+        user: null,
+      },
     };
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        this.setState({
+          Register: { ...this.state.Register, user: authUser.displayName },
+        });
+        // console.log(authUser.displayName);
+      } else {
+        this.setState({
+          Register: {
+            ...this.state.Register,
+            user: null,
+          },
+        });
+      }
+    });
   }
 
   handleChange(e) {
@@ -18,21 +44,21 @@ class Register extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state.Register);
+    // console.log(this.state.Register);
     const { email, password } = this.state.Register;
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((user) => {
-        console.log(user);
+        user.user.updateProfile({
+          displayName: `${this.state.Register.FirstName} ${this.state.Register.LastName}`,
+        });
+        this.props.history.push("/");
       })
       .catch((error) => alert(error.message));
   }
 
-  componentDidMount() {
-    console.log("cdm");
-  }
-
   render() {
+    // console.log(this.state.Register.user);
     return (
       <form onSubmit={this.handleSubmit}>
         <h3>Register</h3>
@@ -85,7 +111,7 @@ class Register extends Component {
           />
         </div>
 
-        <button type="submit" className="btn-btn-primary btn-block">
+        <button type="submit" className="btn btn-primary btn-block">
           Register
         </button>
         <p className="forgot-password text-right">

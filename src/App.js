@@ -1,12 +1,16 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import auth from "./Firebase";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import "./index.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function App() {
+  const handleSubmit = () => {
+    auth.SignOut();
+    this.props.history.push("/sign-in");
+  };
   return (
     <Router>
       <div className="App">
@@ -19,7 +23,6 @@ function App() {
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
                   <Link className="nav-link" to={"/sign-in"}>
-            
                     Login
                   </Link>
                 </li>
@@ -28,6 +31,10 @@ function App() {
                     Register
                   </Link>
                 </li>
+
+                <button onClick={handleSubmit} className="btn btn-primary">
+                  Logout
+                </button>
               </ul>
             </div>
           </div>
@@ -36,10 +43,10 @@ function App() {
         <div className="auth-wrapper">
           <div className="auth-inner">
             <Switch>
-              <Route exact path="/" component={Login} />
+              {/* <Route path="/" component={Login} /> */}
               <Route path="/sign-in" component={Login} />
               <Route path="/sign-up" component={Register} />
-              <Route path="/" component={Dashboard} />
+              <Route exact path="/" component={Dashboard} />
             </Switch>
           </div>
         </div>
