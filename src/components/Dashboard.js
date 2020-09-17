@@ -1,10 +1,13 @@
 import React from "react";
-import { Component } from "react";
+import Clients from "./clients/Clients";
 
-class Dashboard extends Component {
-  render() {
-    return <h3>Hi here is my Dashboard </h3>;
-  }
+function Dashboard() {
+  return (
+    <div className="row">
+      <div className="col-md-10">
+        <Clients />
+      </div>
+    </div>
+  );
 }
-
 export default Dashboard;

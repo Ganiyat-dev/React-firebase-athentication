@@ -18,24 +18,6 @@ class Register extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    auth.onAuthStateChanged((authUser) => {
-      if (authUser) {
-        this.setState({
-          Register: { ...this.state.Register, user: authUser.displayName },
-        });
-        // console.log(authUser.displayName);
-      } else {
-        this.setState({
-          Register: {
-            ...this.state.Register,
-            user: null,
-          },
-        });
-      }
-    });
-  }
-
   handleChange(e) {
     this.setState({
       Register: { ...this.state.Register, [e.target.name]: e.target.value },
