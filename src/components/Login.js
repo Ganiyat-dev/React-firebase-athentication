@@ -11,23 +11,23 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    auth.onAuthStateChanged((authUser) => {
-      if (authUser) {
-        this.setState({
-          Login: { ...this.state.Login, user: authUser.displayName },
-        });
-        // console.log(authUser.displayName);
-      } else {
-        this.setState({
-          Login: {
-            ...this.state.Login,
-            user: null,
-          },
-        });
-      }
-    });
-  }
+  // componentDidMount() {
+  //   auth.onAuthStateChanged((authUser) => {
+  //     if (authUser) {
+  //       this.setState({
+  //         Login: { ...this.state.Login, user: authUser.displayName },
+  //       });
+  //       // console.log(authUser.displayName);
+  //     } else {
+  //       this.setState({
+  //         Login: {
+  //           ...this.state.Login,
+  //           user: null,
+  //         },
+  //       });
+  //     }
+  //   });
+  // }
 
   handleChange(e) {
     this.setState({
@@ -56,10 +56,12 @@ class Login extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <h3>Sign In</h3>
+        <div className="card-title">
+          <h4 className="text-center mb-2">Welcome Back</h4>
+        </div>
 
-        <div className="form-group">
-          <label>Email address</label>
+        <div className="form-group mb-50">
+          <label className="text-bold-600">Email address</label>
           <input
             value={this.state.Login.email}
             type="email"
@@ -71,7 +73,7 @@ class Login extends Component {
         </div>
 
         <div className="form-group">
-          <label>Password</label>
+          <label className="text-bold-600">Password</label>
           <input
             value={this.state.Login.password}
             type="password"
@@ -82,25 +84,39 @@ class Login extends Component {
           />
         </div>
 
-        <div className="form-group">
-          <div className="custom-control custom-checkbox">
-            <input
-              type="checkbox"
-              className="custom-control-input"
-              id="customCheck1"
-            />
-            <label className="custom-control-label" htmlFor="customCheck1">
-              Remember me
-            </label>
+        <div className="form-group d-flex flex-md-row flex-column justify-content-between align-items-center">
+          <div className="text-left">
+            <div className="checkbox checkbox-sm">
+              <input
+                type="checkbox"
+                className="form-check-input"
+                id="exampleCheck1"
+              />
+              <label className="checkboxsmall" htmlFor="exampleCheck1">
+                <small>Keep me logged in</small>
+              </label>
+            </div>
+          </div>
+          <div className="text-right">
+            <a href="/" className="card-link">
+              <small>Forgot Password?</small>
+            </a>
           </div>
         </div>
 
-        <button type="submit" className="btn btn-primary btn-block">
-          Submit
+        <button
+          type="submit"
+          className="btn btn-primary glow w-100 position-relative"
+        >
+          <i className="fas fa-arrow-circle-right" /> Login
         </button>
-        <p className="forgot-password text-right">
-          Forgot <a href="#top">password?</a>
-        </p>
+
+        <div className="text-center mb-100">
+          <small className="mr-25">Don't have an account?</small>
+          <a href="/sign-up">
+            <small>Sign up</small>
+          </a>
+        </div>
       </form>
     );
   }
