@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import auth from "../Firebase";
 
 class Login extends Component {
@@ -113,9 +114,9 @@ class Login extends Component {
 
         <div className="text-center mb-100">
           <small className="mr-25">Don't have an account?</small>
-          <a href="/sign-up">
+          <Link to="/sign-up">
             <small>Sign up</small>
-          </a>
+          </Link>
         </div>
       </form>
     );

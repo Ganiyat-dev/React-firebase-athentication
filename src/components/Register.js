@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import auth from "../Firebase";
 class Register extends Component {
   constructor() {
@@ -97,7 +97,7 @@ class Register extends Component {
           Register
         </button>
         <p className="forgot-password text-right">
-          Already registered <a href="/sign-in"> sign in</a>
+          Already registered <Link to="/sign-in"> sign in</Link>
         </p>
       </form>
     );
