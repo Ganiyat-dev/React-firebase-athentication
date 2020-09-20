@@ -146,7 +146,7 @@ const AppNavBar = () => {
                     className="input"
                     type="text"
                     placeholder="Explore Frest..."
-                    tabindex="-1"
+                    tabIndex="-1"
                     data-search="template-search"
                   />
                   <div className="search-input-close">
