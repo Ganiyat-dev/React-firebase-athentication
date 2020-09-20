@@ -76,17 +76,14 @@ const SideBar = () => {
                       <div id="multi-radial-chart"></div>
                       <ul className="list-inline d-flex justify-content-around mb-0">
                         <li>
-                          {" "}
                           <span className="bullet bullet-xs bullet-primary mr-50"></span>
                           Target
                         </li>
                         <li>
-                          {" "}
                           <span className="bullet bullet-xs bullet-danger mr-50"></span>
                           Mart
                         </li>
                         <li>
-                          {" "}
                           <span className="bullet bullet-xs bullet-warning mr-50"></span>
                           Ebay
                         </li>
