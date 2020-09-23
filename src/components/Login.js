@@ -6,29 +6,11 @@ class Login extends Component {
   constructor() {
     super();
     this.state = {
-      Login: { email: "", password: "", user: null },
+      Login: { email: "", password: "" },
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  // componentDidMount() {
-  //   auth.onAuthStateChanged((authUser) => {
-  //     if (authUser) {
-  //       this.setState({
-  //         Login: { ...this.state.Login, user: authUser.displayName },
-  //       });
-  //       // console.log(authUser.displayName);
-  //     } else {
-  //       this.setState({
-  //         Login: {
-  //           ...this.state.Login,
-  //           user: null,
-  //         },
-  //       });
-  //     }
-  //   });
-  // }
 
   handleChange(e) {
     this.setState({
@@ -41,10 +23,7 @@ class Login extends Component {
     const { email, password } = this.state.Login;
     auth
       .signInWithEmailAndPassword(email, password)
-      .then((user) => {
-        // user.user.updateProfile({
-        //   displayName: `${this.state.Register.FirstName} ${this.state.Register.LastName}`,
-        // });
+      .then(() => {
         this.props.history.push("/");
       })
       .catch((error) => alert(error.message));

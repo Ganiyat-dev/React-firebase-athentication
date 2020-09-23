@@ -1,9 +1,11 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import auth from "../../Firebase";
 
 const AppNavBar = () => {
   const [user, setUser] = useState(null);
+
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       if (authUser) {
@@ -14,11 +16,6 @@ const AppNavBar = () => {
       }
     });
   }, [user]);
-
-  //   const handleSubmit = () => {
-  //     auth.SignOut();
-  //     return <Redirect to="/sign-in" />;
-  //   };
 
   return (
     <nav className="header-navbar navbar-expand-lg navbar navbar-with-menu navbar-fixed bg-primary navbar-brand-center">
@@ -182,11 +179,17 @@ const AppNavBar = () => {
               <li className="dropdown dropdown-user nav-item">
                 <a
                   className="dropdown-toggle nav-link dropdown-user-link"
-                  href="!#"
+                  href="#"
                   data-toggle="dropdown"
                 >
                   <div className="user-nav d-lg-flex d-none">
-                    <span className="user-name">John Doe</span>
+                    {user && (
+                      <span className="user-name">{`${
+                        user.split(" ")[0]
+                      }`}</span>
+                    )}
+
+                    {/* <span className="user-name">John Doe</span> */}
                     <span className="user-status">Available</span>
                   </div>
                   <span>
@@ -201,13 +204,9 @@ const AppNavBar = () => {
                   </span>
                 </a>
                 <div className="dropdown-menu dropdown-menu-right pb-0">
-                  <a className="dropdown-item" href="page-user-profile.html">
-                    <i className="bx bx-user mr-50"></i> Edit Profile
-                  </a>
-                  <div className="dropdown-divider mb-0"></div>
-                  <a className="dropdown-item" href="auth-login.html">
+                  <Link className="dropdown-item" to="/sign-in">
                     <i className="bx bx-power-off mr-50"></i> Logout
-                  </a>
+                  </Link>
                 </div>
               </li>
             </ul>

@@ -5,6 +5,7 @@ import auth from "../../Firebase";
 
 const SideBar = () => {
   const [user, setUser] = useState(null);
+
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       if (authUser) {
@@ -32,7 +33,11 @@ const SideBar = () => {
               <div className="col-xl-4 col-md-6 col-12 dashboard-greetings">
                 <div className="card">
                   <div className="card-header">
-                    <h3 className="greeting-text">Congratulations John!</h3>
+                    {user && (
+                      <h3 className="greeting-text">{`Congratulations, ${
+                        user.split(" ")[0]
+                      }!`}</h3>
+                    )}
                     <p className="mb-0">Best seller of the month</p>
                   </div>
                   <div className="card-content">
