@@ -6,21 +6,19 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/dashboard/Dashboard";
 
-import { Provider } from "./context";
+// import { Provider } from "./context";
 
 class App extends Component {
   render() {
     return (
       <>
-        <Provider>
-          <Router>
-            <Switch>
-              <Route path="/sign-in" component={Login} />
-              <Route path="/sign-up" component={Register} />
-              <Route exact path="/" component={Dashboard} />
-            </Switch>
-          </Router>
-        </Provider>
+        <Router>
+          <Switch>
+            <Route path="/sign-in" component={Login} />
+            <Route path="/sign-up" component={Register} />
+            <Route exact path="/" component={Dashboard} />
+          </Switch>
+        </Router>
       </>
     );
   }
