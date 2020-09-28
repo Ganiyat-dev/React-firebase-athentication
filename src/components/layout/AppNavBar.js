@@ -10,7 +10,7 @@ const AppNavBar = () => {
     auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         setUser(authUser.displayName);
-        console.log(authUser.displayName);
+        // console.log(authUser.displayName);
       } else {
         setUser(null);
       }
