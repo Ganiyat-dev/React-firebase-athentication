@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-// import auth from "./Firebase";
+
 import Login from "./components/Login";
 
 import Register from "./components/Register";
@@ -15,7 +15,6 @@ class App extends Component {
         <Provider>
           <Router>
             <Switch>
-              {/* <Route path="/" component={Login} /> */}
               <Route path="/sign-in" component={Login} />
               <Route path="/sign-up" component={Register} />
               <Route exact path="/" component={Dashboard} />
