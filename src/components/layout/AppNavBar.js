@@ -132,7 +132,7 @@ const AppNavBar = () => {
                 </a>
               </li>
               <li className="nav-item nav-search">
-                <a className="nav-link nav-link-search pt-2" href="!#">
+                <a className="nav-link nav-link-search pt-2" href="#">
                   <i className="ficon bx bx-search"></i>
                 </a>
                 <div className="search-input">
