@@ -1,22 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import auth from "../../Firebase";
 
 const AppNavBar = () => {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    auth.onAuthStateChanged((authUser) => {
-      if (authUser) {
-        setUser(authUser.displayName);
-        // console.log(authUser.displayName);
-      } else {
-        setUser(null);
-      }
-    });
-  }, [user]);
-
   return (
     <nav className="header-navbar navbar-expand-lg navbar navbar-with-menu navbar-fixed bg-primary navbar-brand-center">
       <div className="navbar-header d-xl-block d-none">
@@ -183,11 +169,7 @@ const AppNavBar = () => {
                   data-toggle="dropdown"
                 >
                   <div className="user-nav d-lg-flex d-none">
-                    {user && (
-                      <span className="user-name">{`${
-                        user.split(" ")[0]
-                      }`}</span>
-                    )}
+                    {/* {user && <span className="user-name">{`${" "[0]}`}</span>} */}
 
                     {/* <span className="user-name">John Doe</span> */}
                     <span className="user-status">Available</span>

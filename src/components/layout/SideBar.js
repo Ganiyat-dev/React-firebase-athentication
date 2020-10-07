@@ -1,26 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
-import auth from "../../Firebase";
+import React from "react";
 
 const SideBar = () => {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    auth.onAuthStateChanged((authUser) => {
-      if (authUser) {
-        setUser(authUser.displayName);
-        // console.log(authUser.displayName);
-      } else {
-        setUser(null);
-      }
-    });
-  }, [user]);
-
-  //   const handleSubmit = () => {
-  //     auth.SignOut();
-  //     return <Redirect to="/sign-in" />;
-  //   };
+  // const user = true;
 
   return (
     <div className="app-content content">
@@ -32,14 +14,14 @@ const SideBar = () => {
             <div className="row">
               <div className="col-xl-4 col-md-6 col-12 dashboard-greetings">
                 <div className="card">
-                  <div className="card-header">
+                  {/* <div className="card-header">
                     {user && (
                       <h3 className="greeting-text">{`Congratulations, ${
-                        user.split(" ")[0]
+                        " "[0]
                       }!`}</h3>
                     )}
                     <p className="mb-0">Best seller of the month</p>
-                  </div>
+                  </div> */}
                   <div className="card-content">
                     <div className="card-body">
                       <div className="d-flex justify-content-between align-items-end">
