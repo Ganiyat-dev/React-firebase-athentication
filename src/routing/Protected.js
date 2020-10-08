@@ -11,7 +11,7 @@ function Protected(props) {
     auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         setUser(true);
-        console.log(user);
+        // console.log(user);
       } else {
         setUser(false);
       }

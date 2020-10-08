@@ -1,16 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
+
 import App from "./App";
 import "./index.css";
 import "./component.css";
+import AuthState from "./context/Auth/AuthState";
 
 // import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
-  <BrowserRouter>
+  <AuthState>
     <App />
-  </BrowserRouter>,
+  </AuthState>,
   document.getElementById("root")
 );
 
