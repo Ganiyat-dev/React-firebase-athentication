@@ -1,52 +1,20 @@
-import React, { useEffect, useState } from "react";
-import auth from "../Firebase";
-
+import React, { useContext } from "react";
+// import auth from "../Firebase";
+import { authContext } from "../context/Auth/AuthState";
 import { Route, Redirect } from "react-router-dom";
 
-function Protected(props) {
-  // = ({ component: Component, ...rest }) => {
-  const [user, setUser] = useState(true);
-
-  useEffect(() => {
-    auth.onAuthStateChanged((authUser) => {
-      if (authUser) {
-        setUser(true);
-        // console.log(user);
-      } else {
-        setUser(false);
-      }
-    });
-  });
-
-  // const user = {
-  //   isLoggedIn: false,
-  //   onAuthentication() {
-  //     this.isLoggedIn = true;
-  //   },
-  //   getLogInStatus() {
-  //     return this.isLoggedIn;
-  //   },
-  // };
+const Protected = ({ component: Component, ...rest }) => {
+  const globalUser = useContext(authContext);
+  const { isLoggedin } = globalUser;
+  console.log(isLoggedin);
 
   return (
-    //   return (
-    //     <Route
-    //       {...rest}
-    //       render={(props) =>
-    //         user === true ? <Component {...props} /> : <Redirect to="/sign-in" />
-    //       }
-    //     />
     <Route
-      path={props.path}
-      render={(data) =>
-        user === true ? (
-          <props.component {...data}></props.component>
-        ) : (
-          <Redirect to={{ pathname: "/" }}></Redirect>
-        )
+      {...rest}
+      render={(props) =>
+        !isLoggedin ? <Redirect to="/sign-in" /> : <Component {...props} />
       }
-    ></Route>
+    />
   );
-}
-
+};
 export default Protected;

@@ -1,8 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, { useContext } from "react";
+import { authContext } from "../../context/Auth/AuthState";
 
 const SideBar = () => {
-  // const user = true;
+  const globalUser = useContext(authContext);
+  const { user } = globalUser; 
 
   return (
     <div className="app-content content">
@@ -14,14 +16,14 @@ const SideBar = () => {
             <div className="row">
               <div className="col-xl-4 col-md-6 col-12 dashboard-greetings">
                 <div className="card">
-                  {/* <div className="card-header">
+                  <div className="card-header">
                     {user && (
                       <h3 className="greeting-text">{`Congratulations, ${
-                        " "[0]
+                        user.split(" ")[0]
                       }!`}</h3>
                     )}
                     <p className="mb-0">Best seller of the month</p>
-                  </div> */}
+                  </div>
                   <div className="card-content">
                     <div className="card-body">
                       <div className="d-flex justify-content-between align-items-end">

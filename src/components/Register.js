@@ -13,14 +13,16 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("handleSubmit");
+    // console.log("handleSubmit");
     if (email === "" || password === "") {
       // set alert
     } else {
-      register(email, password, FirstName, LastName);
-      console.log(email);
+      register(email, password, FirstName, LastName).then(() => {
+        history.push("/");
+      });
+
+      // console.log(email);
     }
-    return history.push("/");
   };
 
   return (

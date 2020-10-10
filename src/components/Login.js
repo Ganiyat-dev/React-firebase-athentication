@@ -13,14 +13,16 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("handleSubmit");
+    // console.log("handleSubmit");
     if (email === "" || password === "") {
       // set alert
     } else {
-      login(email, password);
-      console.log(email);
+      login(email, password).then(() => {
+        history.push("/");
+      });
+
+      // console.log(email);
     }
-    return history.push("/");
   };
 
   return (

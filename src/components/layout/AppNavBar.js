@@ -1,8 +1,23 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
+import auth from "../../Firebase";
+import { authContext } from "../../context/Auth/AuthState";
 
 const AppNavBar = () => {
+  const history = useHistory();
+  const globalUser = useContext(authContext);
+  const { user, logOut } = globalUser;
+  const signout = async () => {
+    try {
+      await auth.signOut();
+      logOut();
+      history.push("/sign-in");
+    } catch (error) {
+      // allert
+    }
+  };
+
   return (
     <nav className="header-navbar navbar-expand-lg navbar navbar-with-menu navbar-fixed bg-primary navbar-brand-center">
       <div className="navbar-header d-xl-block d-none">
@@ -169,9 +184,12 @@ const AppNavBar = () => {
                   data-toggle="dropdown"
                 >
                   <div className="user-nav d-lg-flex d-none">
-                    {/* {user && <span className="user-name">{`${" "[0]}`}</span>} */}
+                    {user && (
+                      <span className="user-name">{`${
+                        user.split(" ")[0]
+                      }`}</span>
+                    )}
 
-                    {/* <span className="user-name">John Doe</span> */}
                     <span className="user-status">Available</span>
                   </div>
                   <span>
@@ -186,9 +204,9 @@ const AppNavBar = () => {
                   </span>
                 </a>
                 <div className="dropdown-menu dropdown-menu-right pb-0">
-                  <Link className="dropdown-item" to="/sign-in">
+                  <button className="dropdown-item" onClick={signout}>
                     <i className="bx bx-power-off mr-50"></i> Logout
-                  </Link>
+                  </button>
                 </div>
               </li>
             </ul>
