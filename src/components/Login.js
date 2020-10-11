@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Redirect } from "react-router-dom";
 // import auth from "../Firebase";
 import { authContext } from "../context/Auth/AuthState";
 
@@ -9,6 +9,7 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const globalUser = useContext(authContext);
+ 
   const { login } = globalUser;
 
   const handleSubmit = async (e) => {
@@ -24,6 +25,10 @@ function Login() {
       // console.log(email);
     }
   };
+   const {isLoggedin} = useContext(authContext);
+   if (isLoggedin) {
+     return <Redirect to="/" />;
+   }
 
   return (
     <div className="app-content content">
