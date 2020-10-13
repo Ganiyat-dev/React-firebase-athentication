@@ -24,6 +24,9 @@ function Register() {
       // console.log(email);
     }
   };
+  
+    
+     
 
   return (
     <div className="app-content content">

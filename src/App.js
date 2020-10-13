@@ -13,7 +13,7 @@ const App = () => {
   // const globalUser = useContext(authContext);
   // const { isAuthenticated } = globalUser;
 
-  //
+  // if (isLoggedin && !VerifyEmail) { return <Redirect to="/verify-email"}
   return (
     <BrowserRouter>
       <Switch>

@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import { LOGIN_USER, REGISTER_USER, AUTH_USER, LOGGED_OUT } from "../Types";
 import authReducer from "./AuthReducer";
 import auth from "../../Firebase";
@@ -13,14 +13,16 @@ const AuthState = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(() => {
-    auth.onAuthStateChanged((authUser) => {
+    auth.onAuthStateChanged((user) => {
       // console.log(authUser.displayName);
-      if (authUser) {
+      if (user) {
         dispatch({
           type: AUTH_USER,
-          payload: { user: authUser.displayName, isLoggedin: true },
+          payload: { user: user.displayName, isLoggedin: true },
         });
-        return history?.push("/");
+      
+        // return history?.push("/") 
+         return history ? <Redirect to="/" /> : <Redirect to="sign-in" />;
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -31,17 +33,17 @@ const AuthState = ({ children }) => {
       const regUser = await auth.createUserWithEmailAndPassword(
         email,
         password
-      );
-
+      )
       await regUser.user.updateProfile({
         displayName: `${FirstName} ${LastName}`,
       });
-      // console.log(regUser.user.displayName);
+      console.log(regUser.currentUser);
       dispatch({
         type: REGISTER_USER,
         payload: { user: regUser.user.displayName, isLoggedin: true },
       });
       return history?.push("/");
+      
     } catch (error) {
       console.error(error);
       // if (error.code === "auth/email-already-in-use") {
