@@ -24,10 +24,7 @@ function Login() {
       // });
     }
   };
-  //  const {isLoggedin} = useContext(authContext);
-  //  if (isLoggedin) {
-  //    return <Redirect to="/" />;
-  //  }
+ 
 
   return (
 

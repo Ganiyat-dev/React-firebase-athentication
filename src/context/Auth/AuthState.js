@@ -1,5 +1,5 @@
-import React, { createContext, useReducer, useEffect} from "react";
-import { useHistory } from "react-router-dom";
+import React, { createContext, useReducer, useEffect, useContext} from "react";
+import { useHistory, Redirect } from "react-router-dom";
 import { LOGIN_USER, REGISTER_USER, AUTH_USER, LOGGED_OUT } from "../Types";
 import authReducer from "./AuthReducer";
 import auth from "../../Firebase";
@@ -10,9 +10,10 @@ export const authContext = createContext();
 
 
 
+
 const { Provider } = authContext;
 const AuthState = ({ children }) => {
-
+const isLoggedin = useContext(authContext);
   const history = useHistory();
   const initialState = { user: null, isLoggedin: false };
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -65,7 +66,7 @@ const AuthState = ({ children }) => {
   };
   const login = async (email, password) => {
     try {
-      const regUser = await auth.signInWithEmailAndPassword(email, password).then((currentUser) => {
+      const regUser = await auth.signInWithEmailAndPassword(email, password).then(() => {
           console.log(auth.currentUser.emailVerified);
           if (auth.currentUser.emailVerified) {
              dispatch({
@@ -85,6 +86,10 @@ const AuthState = ({ children }) => {
        toast.error(("Invalid login Credentials") , {position: toast.POSITION.TOP_CENTER, autoClose: false});
       } 
     }
+     
+    if (isLoggedin === true && auth.currentUser.emailVerified) {
+     return <Redirect to="/" />;
+   }
   };
   const logOut = () => {
     dispatch({ type: LOGGED_OUT });
