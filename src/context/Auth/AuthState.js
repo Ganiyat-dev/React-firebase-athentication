@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect, useState} from "react";
+import React, { createContext, useReducer, useEffect} from "react";
 import { useHistory } from "react-router-dom";
 import { LOGIN_USER, REGISTER_USER, AUTH_USER, LOGGED_OUT } from "../Types";
 import authReducer from "./AuthReducer";
@@ -16,7 +16,7 @@ const AuthState = ({ children }) => {
   const history = useHistory();
   const initialState = { user: null, isLoggedin: false };
   const [state, dispatch] = useReducer(authReducer, initialState);
-  const [error, setError] = useState("");
+  
  
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const AuthState = ({ children }) => {
           type: AUTH_USER,
           payload: { user: user.displayName, isLoggedin: true },
         });
-      console.log(auth.currentUser);
+      // console.log(auth.currentUser);
   
       }
     });
@@ -52,12 +52,11 @@ const AuthState = ({ children }) => {
         } else {
           toast.warn( 'Please verify your email to continue');
         }
-      }).catch(error => setError(error.code));
-        toast.error(error.message);
+      })
     } catch (error) {
-      console.error(error);
+      console.error(error.message);
       if (error.code === "auth/email-already-in-use") {
-       toast.warn({ error: "Email already in use" }, {position: toast.POSITION.TOP_CENTER, autoClose: false});
+       toast.warn((error.message) , {position: toast.POSITION.TOP_CENTER, autoClose: false});
       } else {
       toast.error("Something went wrong, please try again", {position: toast.POSITION.TOP_CENTER, autoClose: false});
       }
@@ -81,8 +80,9 @@ const AuthState = ({ children }) => {
           // console.log(auth.currentUser);
           
     } catch (error) {
-      if (error.code === "auth/email-not-found") {
-       toast.warn({ email: "wrong credentials, please try again" }, {position: toast.POSITION.TOP_CENTER, autoClose: false});
+      console.error(error)
+      if (error.code === "auth/user-not-found") {
+       toast.error(("Invalid login Credentials") , {position: toast.POSITION.TOP_CENTER, autoClose: false});
       } 
     }
   };

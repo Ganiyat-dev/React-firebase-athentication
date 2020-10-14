@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
-import { Link, useHistory, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { authContext } from "../context/Auth/AuthState";
  import { ToastContainer } from 'react-toastify';
 
 function Login() {
-  const history = useHistory();
+  // const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const globalUser = useContext(authContext);
@@ -18,9 +18,10 @@ function Login() {
     if (email === "" || password === "") {
       // set alert
     } else {
-      login(email, password).then(() => {
-        history.push("/");
-      });
+      login(email, password)
+      // .then(() => {
+      //   history.push("/");
+      // });
     }
   };
   //  const {isLoggedin} = useContext(authContext);
