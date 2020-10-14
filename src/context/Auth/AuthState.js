@@ -55,7 +55,7 @@ const isLoggedin = useContext(authContext);
         }
       })
     } catch (error) {
-      console.error(error.message);
+      // console.error(error.message);
       if (error.code === "auth/email-already-in-use") {
        toast.warn((error.message) , {position: toast.POSITION.TOP_CENTER, autoClose: false});
       } else {
