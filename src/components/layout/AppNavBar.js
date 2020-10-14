@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import auth from "../../Firebase";
 import { authContext } from "../../context/Auth/AuthState";
+ 
 
 const AppNavBar = () => {
   const history = useHistory();
@@ -16,6 +17,7 @@ const AppNavBar = () => {
     } catch (error) {
       // allert
     }
+     
   };
 
   return (
@@ -32,6 +34,8 @@ const AppNavBar = () => {
                   alt="Calvin"
                 />
               </div>
+               
+                
               <h2 className="brand-text mb-0">Frest</h2>
             </Link>
           </li>
@@ -204,6 +208,7 @@ const AppNavBar = () => {
                   </span>
                 </a>
                 <div className="dropdown-menu dropdown-menu-right pb-0">
+                   
                   <button className="dropdown-item" onClick={signout}>
                     <i className="bx bx-power-off mr-50"></i> Logout
                   </button>

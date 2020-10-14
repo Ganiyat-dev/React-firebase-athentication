@@ -1,15 +1,16 @@
 import React, { useState, useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
-// import auth from "../Firebase";
+import { Link } from "react-router-dom";
 import { authContext } from "../context/Auth/AuthState";
+
 function Register() {
-  const history = useHistory();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [FirstName, setFirstName] = useState("");
   const [LastName, setLastName] = useState("");
   const globalUser = useContext(authContext);
   const { register } = globalUser;
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,9 +18,12 @@ function Register() {
     if (email === "" || password === "") {
       // set alert
     } else {
-      register(email, password, FirstName, LastName).then(() => {
-        history.push("/");
-      });
+      register(email, password, FirstName, LastName)
+      // .then(() => {
+      //   history.push("/");
+      // })
+      
+      
 
       // console.log(email);
     }
@@ -136,7 +140,7 @@ function Register() {
                           <small className="mr-25">
                             Already have an account?
                           </small>
-                          <Link to="/sign-in"> sign in</Link>
+                          <Link to="/sign-in"> sign in </Link>
                         </div>
                       </div>
                     </div>

@@ -1,36 +1,35 @@
 import React, { useState, useContext } from "react";
 import { Link, useHistory, Redirect } from "react-router-dom";
-// import auth from "../Firebase";
 import { authContext } from "../context/Auth/AuthState";
+ import { ToastContainer } from 'react-toastify';
 
 function Login() {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const globalUser = useContext(authContext);
- 
   const { login } = globalUser;
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("handleSubmit");
+    
     if (email === "" || password === "") {
       // set alert
     } else {
       login(email, password).then(() => {
         history.push("/");
       });
-
-      // console.log(email);
     }
   };
-   const {isLoggedin} = useContext(authContext);
-   if (isLoggedin) {
-     return <Redirect to="/" />;
-   }
+  //  const {isLoggedin} = useContext(authContext);
+  //  if (isLoggedin) {
+  //    return <Redirect to="/" />;
+  //  }
 
   return (
+
     <div className="app-content content">
       <div className="content-overlay"></div>
       <div className="content-wrapper">
@@ -49,6 +48,7 @@ function Login() {
                     </div>
                     <div className="card-content">
                       <div className="card-body">
+                        <ToastContainer /> 
                         <form onSubmit={handleSubmit}>
                           <div className="form-group mb-50">
                             <label
@@ -130,6 +130,8 @@ function Login() {
                     </div>
                   </div>
                 </div>
+                
+                
 
                 <div className="col-md-6 d-md-block d-none text-center align-self-center p-3">
                   <div className="card-content">

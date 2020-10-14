@@ -1,78 +1,89 @@
-import React, { createContext, useReducer, useEffect } from "react";
-import { useHistory, Redirect } from "react-router-dom";
+import React, { createContext, useReducer, useEffect, useState} from "react";
+import { useHistory } from "react-router-dom";
 import { LOGIN_USER, REGISTER_USER, AUTH_USER, LOGGED_OUT } from "../Types";
 import authReducer from "./AuthReducer";
 import auth from "../../Firebase";
+import { ToastContainer, toast } from 'react-toastify';
+
+
 export const authContext = createContext();
 
-const { Provider } = authContext;
 
+
+const { Provider } = authContext;
 const AuthState = ({ children }) => {
+
   const history = useHistory();
   const initialState = { user: null, isLoggedin: false };
   const [state, dispatch] = useReducer(authReducer, initialState);
+  const [error, setError] = useState("");
+ 
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
-      // console.log(authUser.displayName);
       if (user) {
         dispatch({
           type: AUTH_USER,
           payload: { user: user.displayName, isLoggedin: true },
         });
-      
-        // return history?.push("/") 
-         return history ? <Redirect to="/" /> : <Redirect to="sign-in" />;
+      console.log(auth.currentUser);
+  
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+
   const register = async (email, password, FirstName, LastName) => {
     try {
-      const regUser = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      )
+      const regUser = await auth.createUserWithEmailAndPassword( email, password)
+      
       await regUser.user.updateProfile({
         displayName: `${FirstName} ${LastName}`,
       });
-      console.log(regUser.currentUser);
-      dispatch({
+  
+       auth.currentUser.sendEmailVerification().then((currentUser) => {
+          console.log("email verification sent.");
+          if (auth.currentUser.emailVerified) {
+             dispatch({
         type: REGISTER_USER,
         payload: { user: regUser.user.displayName, isLoggedin: true },
-      });
-      return history?.push("/");
-      
+      });  
+        } else {
+          toast.warn( 'Please verify your email to continue');
+        }
+      }).catch(error => setError(error.code));
+        toast.error(error.message);
     } catch (error) {
       console.error(error);
-      // if (error.code === "auth/email-already-in-use") {
-      // return response.status(400).json({ email: "Email already in use" });
-      // } else {
-      // return response
-      // .status(500)
-      // .json({ general: "Something went wrong, please try again" });
-      // }
-
-      // alert(error.message);
+      if (error.code === "auth/email-already-in-use") {
+       toast.warn({ error: "Email already in use" }, {position: toast.POSITION.TOP_CENTER, autoClose: false});
+      } else {
+      toast.error("Something went wrong, please try again", {position: toast.POSITION.TOP_CENTER, autoClose: false});
+      }
+      
     }
   };
   const login = async (email, password) => {
     try {
-      const regUser = await auth.signInWithEmailAndPassword(email, password);
-
-      // console.log(regUser.user.displayName);
-      dispatch({
-        type: LOGIN_USER,
-        payload: { user: regUser.user.displayName, isLoggedin: true },
+      const regUser = await auth.signInWithEmailAndPassword(email, password).then((currentUser) => {
+          console.log(auth.currentUser.emailVerified);
+          if (auth.currentUser.emailVerified) {
+             dispatch({
+                    type: LOGIN_USER,
+                    payload: { user: regUser.user.displayName, isLoggedin: true },
+                  }); 
+                  return history?.push("/")
+           } else {
+          toast.warn( 'Please verify your email to continue');
+          }
       });
-      return history?.push("/");
+          // console.log(auth.currentUser);
+          
     } catch (error) {
-      alert(error.message);
-      // console.error(error);
-      //  return response
-      //    .status(403)
-      //    .json({ general: "wrong credentials, please try again" });
+      if (error.code === "auth/email-not-found") {
+       toast.warn({ email: "wrong credentials, please try again" }, {position: toast.POSITION.TOP_CENTER, autoClose: false});
+      } 
     }
   };
   const logOut = () => {
@@ -80,6 +91,8 @@ const AuthState = ({ children }) => {
   };
 
   return (
+    <>
+    <ToastContainer />
     <Provider
       value={{
         user: state.user,
@@ -91,6 +104,7 @@ const AuthState = ({ children }) => {
     >
       {children}
     </Provider>
+    </>
   );
 };
 export default AuthState;

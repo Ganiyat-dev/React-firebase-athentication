@@ -1,19 +1,13 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-// import auth from "./Firebase";
 import Protected from "./routing/Protected";
 import Login from "./components/Login";
-
+import 'react-toastify/dist/ReactToastify.css';
 import Register from "./components/Register";
 import Dashboard from "./components/dashboard/Dashboard";
-// import { authContext } from "./context/Auth/AuthState";
+
 
 const App = () => {
-  // let history = useHistory();
-  // const globalUser = useContext(authContext);
-  // const { isAuthenticated } = globalUser;
-
-  // if (isLoggedin && !VerifyEmail) { return <Redirect to="/verify-email"}
   return (
     <BrowserRouter>
       <Switch>

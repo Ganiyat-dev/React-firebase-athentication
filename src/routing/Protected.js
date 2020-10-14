@@ -6,7 +6,7 @@ import { Route, Redirect } from "react-router-dom";
 const Protected = ({ component: Component, ...rest }) => {
   const globalUser = useContext(authContext);
   const { isLoggedin } = globalUser;
-  console.log(isLoggedin);
+  // console.log(isLoggedin);
 
   return (
     <Route
