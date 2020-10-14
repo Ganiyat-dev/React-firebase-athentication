@@ -1,5 +1,5 @@
-import React, { createContext, useReducer, useEffect, useContext} from "react";
-import { useHistory, Redirect } from "react-router-dom";
+import React, { createContext, useReducer, useEffect} from "react";
+import { useHistory } from "react-router-dom";
 import { LOGIN_USER, REGISTER_USER, AUTH_USER, LOGGED_OUT } from "../Types";
 import authReducer from "./AuthReducer";
 import auth from "../../Firebase";
@@ -10,10 +10,9 @@ export const authContext = createContext();
 
 
 
-
 const { Provider } = authContext;
 const AuthState = ({ children }) => {
-const isLoggedin = useContext(authContext);
+
   const history = useHistory();
   const initialState = { user: null, isLoggedin: false };
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -55,9 +54,9 @@ const isLoggedin = useContext(authContext);
         }
       })
     } catch (error) {
-      // console.error(error.message);
+      // console.error(error);
       if (error.code === "auth/email-already-in-use") {
-       toast.warn((error.message) , {position: toast.POSITION.TOP_CENTER, autoClose: false});
+       toast.warn(( error.message ), {position: toast.POSITION.TOP_CENTER, autoClose: false});
       } else {
       toast.error("Something went wrong, please try again", {position: toast.POSITION.TOP_CENTER, autoClose: false});
       }
@@ -66,7 +65,7 @@ const isLoggedin = useContext(authContext);
   };
   const login = async (email, password) => {
     try {
-      const regUser = await auth.signInWithEmailAndPassword(email, password).then(() => {
+      const regUser = await auth.signInWithEmailAndPassword(email, password).then((currentUser) => {
           console.log(auth.currentUser.emailVerified);
           if (auth.currentUser.emailVerified) {
              dispatch({
@@ -81,15 +80,10 @@ const isLoggedin = useContext(authContext);
           // console.log(auth.currentUser);
           
     } catch (error) {
-      console.error(error)
       if (error.code === "auth/user-not-found") {
-       toast.error(("Invalid login Credentials") , {position: toast.POSITION.TOP_CENTER, autoClose: false});
+       toast.warn("Inavlid Login Credentials" , {position: toast.POSITION.TOP_CENTER, autoClose: false});
       } 
     }
-     
-    if (isLoggedin === true && auth.currentUser.emailVerified) {
-     return <Redirect to="/" />;
-   }
   };
   const logOut = () => {
     dispatch({ type: LOGGED_OUT });
@@ -113,3 +107,8 @@ const isLoggedin = useContext(authContext);
   );
 };
 export default AuthState;
+
+
+
+
+
