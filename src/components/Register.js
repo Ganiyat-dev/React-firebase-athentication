@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { authContext } from "../context/Auth/AuthState";
 
@@ -10,6 +10,10 @@ function Register() {
   const [LastName, setLastName] = useState("");
   const globalUser = useContext(authContext);
   const { register } = globalUser;
+
+   useEffect(() => {
+    document.title = "Register Page";
+  }, [])
   
 
   const handleSubmit = async (e) => {

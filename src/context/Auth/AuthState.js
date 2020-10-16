@@ -81,9 +81,12 @@ const AuthState = ({ children }) => {
           
     } catch (error) {
       if (error.code === "auth/user-not-found") {
-       toast.warn("Inavlid Login Credentials" , {position: toast.POSITION.TOP_CENTER, autoClose: false});
-      } 
-    }
+        console.log(error.code);
+       toast.error("Inavlid Login Credentials" , {position: toast.POSITION.TOP_CENTER, autoClose: false});
+      } else {
+      toast.error("Something went wrong, please try again", {position: toast.POSITION.TOP_CENTER, autoClose: false});
+      }
+    } 
   };
   const logOut = () => {
     dispatch({ type: LOGGED_OUT });
